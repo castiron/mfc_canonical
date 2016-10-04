@@ -102,9 +102,11 @@ class Canonical
         if (isset($this->conf['host']) && !empty($this->conf['host'])) {
             $host = $this->conf['host'];
         } else {
+            $scheme = $this->conf['scheme'] ? $this->conf['scheme'] :
+                (GeneralUtility::getIndpEnv('TYPO3_SSL') ? 'https' : 'http');
             $host = $GLOBALS['TSFE']->baseUrl ?
                 $GLOBALS['TSFE']->baseUrl :
-                'http://' . $_SERVER['HTTP_HOST'];
+                $scheme . '://' . $_SERVER['HTTP_HOST'];
         }
 
         $content .= rtrim($host, '/') . '/';
